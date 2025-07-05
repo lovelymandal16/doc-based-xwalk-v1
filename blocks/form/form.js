@@ -724,7 +724,8 @@ export default async function decorate(block) {
 
       var response = await fetch('https://7fce-130-248-113-29.ngrok-free.app/adobe/communications/crisprtoxdp', options);
         console.log(response);
-
+      var xdp_res = response.JSON().xdp; 
+      console.log(xdp_res); 
 
 
       
