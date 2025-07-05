@@ -23,6 +23,45 @@ import {
   createInput,
 } from './util.js';
 
+const datefield = {
+  "type": "datetimefield",
+  "attribute": {
+    "name": "DateField",
+    "height": "8.9992mm",
+    "width": "61.9986mm"
+  },
+  "caption": {
+    "para": {
+      "vAlign": "middle"
+    },
+    "reserve": "25.0012mm",
+    "value": {
+      "text": {
+        "content": "Date Field"
+      }
+    },
+    "placement": "left"
+  },
+  "value": {
+    "date": {
+      "content": ""
+    }
+  },
+  "ui": {
+    "dateTimeEdit": {}
+  },
+  "margin": {
+    "topInset": "1mm",
+    "leftInset": "1mm",
+    "bottomInset": "1mm",
+    "rightInset": "1mm"
+  },
+  "para": {
+    "vAlign": "middle"
+  }
+}
+
+
 export const DELAY_MS = 0;
 let captchaField;
 let afModule;
