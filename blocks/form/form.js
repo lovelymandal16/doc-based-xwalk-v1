@@ -449,6 +449,15 @@ export async function fetchForm(pathname) {
   return data;
 }
 
+// Transform JSON functions
+function transformJson(inputJson) {
+    const result = transformJsonUtil(inputJson);
+    const dor = getOrCreateDor(result);
+    dor.pageTemplate = defaultPageTemplate.pageTemplate;
+    console.log(result);
+    return result;
+}
+
 export default async function decorate(block) {
   let container = block.querySelector('a[href]');
   let formDef;
@@ -463,22 +472,11 @@ export default async function decorate(block) {
   let rules = true;
   let form;
   if (formDef) {
-    const submitProps = formDef?.properties?.['fd:submit'];
-    const actionType = submitProps?.actionName || formDef?.properties?.actionType;
-    const spreadsheetUrl = submitProps?.spreadsheet?.spreadsheetUrl
-      || formDef?.properties?.spreadsheetUrl;
-
-    if (actionType === 'spreadsheet' && spreadsheetUrl) {
-      // Check if we're in an iframe and use parent window path if available
-      const iframePath = window.frameElement ? window.parent.location.pathname
-        : window.location.pathname;
-      formDef.action = SUBMISSION_SERVICE + btoa(pathname || iframePath);
-    } else {
-      formDef.action = getSubmitBaseUrl() + (formDef.action || '');
-    }
+    
     if (isDocumentBasedForm(formDef)) {
       const transform = new DocBasedFormToAF();
       formDef = transform.transform(formDef);
+      formDef = transformJson(formDef);
       source = 'sheet';
       form = await createForm(formDef);
       const docRuleEngine = await import('./rules-doc/index.js');
